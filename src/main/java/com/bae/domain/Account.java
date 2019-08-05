@@ -50,6 +50,9 @@ public class Account {
 		this.lastName = lastName;
 	}
 	
+	public String toString() {
+		return "ID: " + this.id + "First Name: " + this.firstName + "Last Name: " + this.lastName;
+	}
 	
 
 }
