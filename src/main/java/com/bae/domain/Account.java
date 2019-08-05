@@ -51,7 +51,7 @@ public class Account {
 	}
 	
 	public String toString() {
-		return "ID: " + this.id + "First Name: " + this.firstName + "Last Name: " + this.lastName;
+		return "ID: " + this.id +"\n" + "First Name: " + this.firstName +"\n" + "Last Name: " + this.lastName;
 	}
 	
 
