@@ -37,8 +37,9 @@ public class AccountController {
 	}
 	
 	@GetMapping("/{id}")
-	public Account findById(@PathVariable("id") Long accountId){
-		return accountService.findById(accountId);
+	public ResponseEntity<Account> findById(@PathVariable("id") Long accountId){
+		Account account = accountService.findById(accountId);
+		return new ResponseEntity<>(account, HttpStatus.OK);
 	}
 	@PostMapping
 	public ResponseEntity<Account> createAccount(@RequestBody Account account) {
