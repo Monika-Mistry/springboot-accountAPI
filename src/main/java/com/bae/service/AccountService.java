@@ -6,6 +6,8 @@ import com.bae.domain.Account;
 
 public interface AccountService {
 	
+	public Account findById(Long id);
+	
 	public List<Account> findAll();
 	
 	public Account createAccount(Account account);

@@ -23,7 +23,6 @@ public class AccountServiceImpl implements AccountService {
 
 	}
 	
-
 	public List<Account> findAll() {
 		return accountRepository.findAll();
 	}
@@ -43,6 +42,10 @@ public class AccountServiceImpl implements AccountService {
 		accountRepository.save(account);
 		
 		return account.toString();
+	}
+
+	public Account findById(Long id) {
+		return accountRepository.findById(id).orElse(null);
 	}
 
 }
