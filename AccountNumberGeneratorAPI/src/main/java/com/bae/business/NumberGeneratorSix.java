@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class NumberGeneratorSix implements NumberGenerator {
 
 	public String getAccountNumber() {
