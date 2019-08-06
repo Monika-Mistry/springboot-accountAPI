@@ -1,6 +1,9 @@
 package com.bae.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bae.business.NumberGenerator;
@@ -19,8 +22,11 @@ public class NumberController {
 		this.numberGenerator = numberGenerator;
 	}
 
-	public String getAccountNumber() {
-		return numberGenerator.getAccountNumber();		
+	@GetMapping("/getAccNo")
+	public ResponseEntity<String> getAccountNumber() {
+		String accNo =  numberGenerator.getAccountNumber();
+		
+		return new ResponseEntity<String>(accNo, HttpStatus.OK);
 	}
 
 }
