@@ -8,10 +8,11 @@ import java.util.function.Consumer;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NumberGeneratorSix implements NumberGenerator {
-
-	public String getAccountNumber() {
+public class NumberGeneratorTen implements NumberGenerator {
+	
+public String getAccountNumber() {
 		
+
 		String digits = "0123456789";
 		String chars = "ABC";
 
@@ -23,7 +24,7 @@ public class NumberGeneratorSix implements NumberGenerator {
 		
 		appendChar.accept(chars);
 		
-		while(result.size() < 7) {
+		while(result.size() < 11) {
 			appendChar.accept(digits);
 		}
 		
