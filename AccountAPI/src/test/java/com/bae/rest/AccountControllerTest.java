@@ -27,7 +27,7 @@ public class AccountControllerTest {
 	
 	private static final Account MOCK_ACCOUNT_1 = new Account(1L, "John", "Smith");
 	private static final Account MOCK_ACCOUNT_2 = new Account(2L, "Jane", "Doe");
-	private static final String MOCK_DELETE_REPSPONSE = "Account Successfully Deleted";
+	private static final String MOCK_DELETE_RESPONSE = "Account Successfully Deleted";
 	
 	
 	
@@ -57,9 +57,9 @@ public class AccountControllerTest {
 	
 	@Test
 	public void deleteAccountTest() {
-		when(service.deleteAccount(MOCK_ACCOUNT_1)).thenReturn(MOCK_DELETE_REPSPONSE);
+		when(service.deleteAccount(MOCK_ACCOUNT_1)).thenReturn(MOCK_DELETE_RESPONSE);
 		
-		assertEquals(MOCK_DELETE_REPSPONSE, controller.deleteAccount(MOCK_ACCOUNT_1));
+		assertEquals(MOCK_DELETE_RESPONSE, controller.deleteAccount(MOCK_ACCOUNT_1));
 		
 		verify(service).deleteAccount(MOCK_ACCOUNT_1);
 	} 

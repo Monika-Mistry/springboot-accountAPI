@@ -1,16 +1,21 @@
 package com.bae.rest;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +26,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.client.RestTemplate;
 
 import com.bae.domain.Account;
 import com.bae.service.AccountService;
@@ -36,9 +42,13 @@ public class WebMockTest {
 
 	@MockBean
 	private AccountService service;
+	
+	@MockBean
+	private RestTemplate restTemplate;
 
 	private static final Account MOCK_ACCOUNT_1 = new Account(1L, "John", "Smith");
 	private static final Account MOCK_ACCOUNT_2 = new Account(2L, "Jane", "Doe");
+	private static final String MOCK_DELETE_RESPONSE = "Account Successfully Deleted";
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 	@Test
@@ -51,7 +61,19 @@ public class WebMockTest {
 		when(service.findAll()).thenReturn(MOCK_LIST);
 
 		mockMvc.perform(get("/all")).andExpect(jsonPath("$[0].firstName", is("John")))
-				.andExpect(jsonPath("$[1].firstName", is("Jane")));
+				.andExpect(jsonPath("$[1].firstName", is("Jane"))).andExpect(jsonPath("$", hasSize(2)));
+
+	}
+
+	@Test
+	public void findByIdTest() throws Exception {
+		List<Account> MOCK_LIST = new ArrayList<>();
+
+		MOCK_LIST.add(MOCK_ACCOUNT_1);
+
+		when(service.findById(1L)).thenReturn(MOCK_ACCOUNT_1);
+
+		mockMvc.perform(get("/{id}", 1L)).andExpect(jsonPath("$.firstName", is("John")));
 	}
 
 	@Test
@@ -62,6 +84,32 @@ public class WebMockTest {
 
 		mockMvc.perform(MockMvcRequestBuilders.post("/").contentType(MediaType.APPLICATION_JSON).content(postValue))
 				.andExpect(status().isCreated()).andDo(print());
+
+	}
+
+	@Test
+	public void deleteAccountTest() throws Exception {
+		String deleteValue = OBJECT_MAPPER.writeValueAsString(MOCK_ACCOUNT_1);
+
+//		when(service.deleteAccount(MOCK_ACCOUNT_1)).thenReturn(MOCK_DELETE_RESPONSE);
+		doReturn(MOCK_DELETE_RESPONSE).when(service).deleteAccount(MOCK_ACCOUNT_1);
+
+		mockMvc.perform(MockMvcRequestBuilders.delete("/").contentType(MediaType.APPLICATION_JSON).content(deleteValue))
+				.andExpect(status().isOk()).andExpect(content().string(MOCK_DELETE_RESPONSE)).andDo(print())
+				.andReturn();
+
+	}
+
+	@Test
+	public void updateAccountTest() throws Exception {
+		String putValue = OBJECT_MAPPER.writeValueAsString(MOCK_ACCOUNT_1);
+
+//		when(service.updateAccount(MOCK_ACCOUNT_1)).thenReturn(MOCK_ACCOUNT_1.toString());
+		doReturn(MOCK_ACCOUNT_1.toString()).when(service).updateAccount(MOCK_ACCOUNT_1);
+
+		mockMvc.perform(MockMvcRequestBuilders.put("/").contentType(MediaType.APPLICATION_JSON).content(putValue))
+				.andExpect(status().isOk()).andExpect(content().string(MOCK_ACCOUNT_1.toString())).andDo(print());
+
 	}
 
 }
