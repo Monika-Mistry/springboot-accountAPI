@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.bae.service.PrizeServiceImpl;
+
 @RunWith(SpringRunner.class)
 public class PrizeServiceImplTest {
 	

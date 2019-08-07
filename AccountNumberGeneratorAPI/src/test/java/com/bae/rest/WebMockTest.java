@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.client.RestTemplate;
 
-import com.bae.business.NumberGenerator;
+import com.bae.service.NumberGenerator;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(NumberController.class)

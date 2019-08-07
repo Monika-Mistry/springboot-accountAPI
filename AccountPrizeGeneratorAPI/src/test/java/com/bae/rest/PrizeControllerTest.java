@@ -9,7 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.bae.business.PrizeService;
+import com.bae.service.PrizeService;
 
 @RunWith(SpringRunner.class)
 public class PrizeControllerTest {
