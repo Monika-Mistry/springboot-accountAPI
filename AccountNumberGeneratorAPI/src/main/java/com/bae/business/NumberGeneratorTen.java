@@ -7,7 +7,6 @@ import java.util.function.Consumer;
 
 import org.springframework.stereotype.Service;
 
-@Service
 public class NumberGeneratorTen implements NumberGenerator {
 	
 public String getAccountNumber() {
