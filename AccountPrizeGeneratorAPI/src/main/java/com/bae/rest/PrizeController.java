@@ -2,7 +2,6 @@ package com.bae.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bae.business.PrizeService;
@@ -20,8 +19,8 @@ public class PrizeController {
 	public PrizeController() {
 	}
 
-	@GetMapping("/getPrize/{accountNo}")
-	public String getPrize(@PathVariable("accountNo") String accountNumber) {
-		return prizeService.getPrize(accountNumber);
+	@GetMapping("/getPrize")
+	public String getPrize() {
+		return prizeService.getPrize();
 	}
 }

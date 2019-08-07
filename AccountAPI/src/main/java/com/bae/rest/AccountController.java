@@ -25,7 +25,7 @@ public class AccountController {
 	private RestTemplate restTemplate;
 	
 	private static final String ACC_NO_URL = "http://localhost:8081/getAccNo";
-	private static final String PRIZE_URL = "http://localhost:8082/getPrize/";
+	private static final String PRIZE_URL = "http://localhost:8082/getPrize";
 
 	@Autowired
 	public AccountController(AccountService accountService, RestTemplate restTemplate) {
@@ -49,7 +49,12 @@ public class AccountController {
 		return new ResponseEntity<>(account, HttpStatus.OK);
 	}
 	@PostMapping
-	public ResponseEntity<Account> createAccount(@RequestBody Account account) {	
+	public ResponseEntity<Account> createAccount(@RequestBody Account account) {
+		String accountNumber = restTemplate.exchange(ACC_NO_URL, HttpMethod.GET, null, String.class).getBody();
+		String prize = restTemplate.exchange(PRIZE_URL, HttpMethod.GET, null, String.class).getBody();
+		
+		account.setAccountNumber(accountNumber);
+		account.setPrize(prize);		
 		
 		Account newAccount = accountService.createAccount(account);
 		return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
@@ -63,18 +68,7 @@ public class AccountController {
 	@PutMapping
 	public String updateAccount(@RequestBody Account account) {
 		return accountService.updateAccount(account);
-	}
-	
-//	@GetMapping("/getMicro")
-//	public ResponseEntity<Account> getMicro(){
-//		String accountNumber = restTemplate.exchange(ACC_NO_URL, HttpMethod.GET, null, String.class).getBody();
-//		
-//		String prize = restTemplate.exchange(PRIZE_URL + accountNumber, HttpMethod.GET, null, String.class).getBody();
-//		
-//		
-//		
-//	}
-	
+	}	
 
 
 }

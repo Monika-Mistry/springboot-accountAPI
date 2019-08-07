@@ -33,14 +33,13 @@ public class WebMockTest {
 	@MockBean
 	private RestTemplate restTemplate;
 
-	private static final String MOCK_ACCOUNT_NUMBER = "A123456";
 	private static final String MOCK_PRIZE = "£0";
 
 	@Test
 	public void getAccountNumberTest() throws Exception {
-		doReturn(MOCK_PRIZE).when(service).getPrize(MOCK_ACCOUNT_NUMBER);
+		doReturn(MOCK_PRIZE).when(service).getPrize();
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/getPrize/" + MOCK_ACCOUNT_NUMBER)).andExpect(status().isOk())
+		mockMvc.perform(MockMvcRequestBuilders.get("/getPrize")).andExpect(status().isOk())
 				.andExpect(content().string(MOCK_PRIZE)).andDo(print()).andReturn();
 	}
 
