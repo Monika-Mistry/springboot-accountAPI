@@ -2,10 +2,15 @@ package com.bae.business;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.bae.service.PrizeServiceImpl;
 
 @RunWith(SpringRunner.class)
 public class PrizeServiceImplTest {
@@ -14,24 +19,14 @@ public class PrizeServiceImplTest {
 	private PrizeServiceImpl service;
 	
 	@Test
-	public void getPrizeSixTest() {
-		assertEquals("£0", service.getPrize("A123456"));
-		assertEquals("£50", service.getPrize("B123456"));
-		assertEquals("£100", service.getPrize("C123456"));
+	public void getPrizeTest() {
+		String pattern = "£\\d{1,3}";
+		Pattern p = Pattern.compile(pattern);
+		Matcher m = p.matcher(service.getPrize());	
+	System.out.println(service.getPrize());
+		
+		assertEquals(true, m.matches());
 	}
 	
-	@Test
-	public void getPrizeEightTest() {
-		assertEquals("£0", service.getPrize("A12345678"));
-		assertEquals("£500", service.getPrize("B12345678"));
-		assertEquals("£750", service.getPrize("C12345678"));
-	}
-	
-	@Test
-	public void getPrizeTenTest() {
-		assertEquals("£0", service.getPrize("A1234567890"));
-		assertEquals("£5000", service.getPrize("B1234567890"));
-		assertEquals("£10000", service.getPrize("C1234567890"));
-	}
 
 }

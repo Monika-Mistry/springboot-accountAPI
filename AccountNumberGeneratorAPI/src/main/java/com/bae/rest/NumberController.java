@@ -1,10 +1,12 @@
 package com.bae.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bae.business.NumberGenerator;
+import com.bae.service.NumberGenerator;
 
 @RestController
 public class NumberController {
@@ -21,8 +23,8 @@ public class NumberController {
 	}
 
 	@GetMapping("/getAccNo")
-	public String getAccountNumber() {		
-		return numberGenerator.getAccountNumber();
+	public ResponseEntity<String> getAccountNumber() {		
+		return new ResponseEntity<String>(numberGenerator.getAccountNumber(), HttpStatus.OK);
 	}
 
 }

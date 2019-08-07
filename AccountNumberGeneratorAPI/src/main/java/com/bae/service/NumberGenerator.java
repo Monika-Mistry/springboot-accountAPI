@@ -1,4 +1,4 @@
-package com.bae.business;
+package com.bae.service;
 
 public interface NumberGenerator {
 	

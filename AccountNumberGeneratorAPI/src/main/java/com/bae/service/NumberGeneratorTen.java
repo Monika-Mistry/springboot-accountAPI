@@ -1,4 +1,4 @@
-package com.bae.business;
+package com.bae.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +7,11 @@ import java.util.function.Consumer;
 
 import org.springframework.stereotype.Service;
 
-@Service
-public class NumberGeneratorEight implements NumberGenerator{
+public class NumberGeneratorTen implements NumberGenerator {
 	
 public String getAccountNumber() {
 		
+
 		String digits = "0123456789";
 		String chars = "ABC";
 
@@ -23,7 +23,7 @@ public String getAccountNumber() {
 		
 		appendChar.accept(chars);
 		
-		while(result.size() < 9) {
+		while(result.size() < 11) {
 			appendChar.accept(digits);
 		}
 		
