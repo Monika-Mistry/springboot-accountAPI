@@ -3,7 +3,6 @@ package com.bae.rest;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -13,9 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +39,13 @@ public class WebMockTest {
 
 	@MockBean
 	private AccountService service;
-	
+
 	@MockBean
 	private RestTemplate restTemplate;
 
-	private static final Account MOCK_ACCOUNT_1 = new Account(1L, "John", "Smith");
-	private static final Account MOCK_ACCOUNT_2 = new Account(2L, "Jane", "Doe");
+	private static final Account MOCK_ACCOUNT_1 = new Account(1L, "John", "Smith", "A123456", "£0");
+	private static final Account MOCK_ACCOUNT_2 = new Account(2L, "Jane", "Doe", "B123456", "£100");
+	private static final Account MOCK_ACCOUNT_CREATE = new Account(1L, "John", "Smith");
 	private static final String MOCK_DELETE_RESPONSE = "Account Successfully Deleted";
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
@@ -78,9 +76,9 @@ public class WebMockTest {
 
 	@Test
 	public void createAccountTest() throws Exception {
-		String postValue = OBJECT_MAPPER.writeValueAsString(MOCK_ACCOUNT_1);
+		String postValue = OBJECT_MAPPER.writeValueAsString(MOCK_ACCOUNT_CREATE);
 
-		doReturn(MOCK_ACCOUNT_1).when(service).createAccount(MOCK_ACCOUNT_1);
+		doReturn(MOCK_ACCOUNT_1).when(service).createAccount(MOCK_ACCOUNT_CREATE);
 
 		mockMvc.perform(MockMvcRequestBuilders.post("/").contentType(MediaType.APPLICATION_JSON).content(postValue))
 				.andExpect(status().isCreated()).andDo(print());

@@ -23,7 +23,7 @@ public class AccountController {
 
 	private AccountService accountService;
 	private RestTemplate restTemplate;
-	
+
 	private static final String ACC_NO_URL = "http://localhost:8081/getAccNo";
 	private static final String PRIZE_URL = "http://localhost:8082/getPrize";
 
@@ -42,33 +42,40 @@ public class AccountController {
 		return accountService.findAll();
 
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Account> findById(@PathVariable("id") Long accountId){
+	public ResponseEntity<Account> findById(@PathVariable("id") Long accountId) {
 		Account account = accountService.findById(accountId);
 		return new ResponseEntity<>(account, HttpStatus.OK);
 	}
+
 	@PostMapping
 	public ResponseEntity<Account> createAccount(@RequestBody Account account) {
-		String accountNumber = restTemplate.exchange(ACC_NO_URL, HttpMethod.GET, null, String.class).getBody();
-		String prize = restTemplate.exchange(PRIZE_URL, HttpMethod.GET, null, String.class).getBody();
+		Account createAccount = new Account();
 		
-		account.setAccountNumber(accountNumber);
-		account.setPrize(prize);		
+		ResponseEntity<String> getAccNo = restTemplate.exchange(ACC_NO_URL, HttpMethod.GET, null, String.class);
+		ResponseEntity<String> getPrize = restTemplate.exchange(PRIZE_URL, HttpMethod.GET, null, String.class);
 		
-		Account newAccount = accountService.createAccount(account);
+		String accountNumber = getAccNo.getBody();
+		String prize = getPrize.getBody();
+
+		createAccount.setFirstName(account.getFirstName());
+		createAccount.setLastName(account.getLastName());
+		createAccount.setAccountNumber(accountNumber);
+		createAccount.setPrize(prize);
+
+		Account newAccount = accountService.createAccount(createAccount);
 		return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
 	}
-	
+
 	@DeleteMapping
 	public String deleteAccount(@RequestBody Account account) {
 		return accountService.deleteAccount(account);
 	}
-	
+
 	@PutMapping
 	public String updateAccount(@RequestBody Account account) {
 		return accountService.updateAccount(account);
-	}	
-
+	}
 
 }
