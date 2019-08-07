@@ -29,6 +29,11 @@ public class AccountControllerTest {
 	private static final Account MOCK_ACCOUNT_2 = new Account(2L, "Jane", "Doe");
 	private static final String MOCK_DELETE_RESPONSE = "Account Successfully Deleted";
 	
+	private static final String MOCK_ACCOUNT_NO = "A123456";
+	private static final String MOCK_PRIZE = "£0";
+	private static final String ACC_NO_URL = "http://localhost:8081/getAccNo";
+	private static final String PRIZE_URL = "http://localhost:8082/getPrize/";
+	
 	
 	
 	@Test
