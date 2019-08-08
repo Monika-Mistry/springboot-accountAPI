@@ -67,10 +67,13 @@ public class AccountController {
 		createAccount.setLastName(account.getLastName());
 		createAccount.setAccountNumber(accountNumber);
 		createAccount.setPrize(prize);
+	
 
 		Account newAccount = accountService.createAccount(createAccount);
 		
 		sendToQueue(newAccount);
+		
+		
 		return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
 	}
 
