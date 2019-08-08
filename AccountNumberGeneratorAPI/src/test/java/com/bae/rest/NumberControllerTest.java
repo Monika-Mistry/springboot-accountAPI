@@ -26,7 +26,7 @@ public class NumberControllerTest {
 	public void getAccountNumberTest() {
 		when(numgen.getAccountNumber()).thenReturn(MOCK_ACCOUNT_NUMBER);
 		
-		assertEquals(MOCK_ACCOUNT_NUMBER, controller.getAccountNumber());
+		assertEquals(MOCK_ACCOUNT_NUMBER, controller.getAccountNumber().getBody());
 	}
 	
 	
