@@ -27,8 +27,8 @@ public class AccountController {
 	private RestTemplate restTemplate;
 	private JmsTemplate jmsTemplate;
 
-	private static final String ACC_NO_URL = "http://localhost:8081/getAccNo";
-	private static final String PRIZE_URL = "http://localhost:8082/getPrize";
+	private static final String ACC_NO_URL = "http://numgen:8081/getAccNo";
+	private static final String PRIZE_URL = "http://prizegen:8082/getPrize";
 
 	@Autowired
 	public AccountController(AccountService accountService, RestTemplate restTemplate, JmsTemplate jmsTemplate) {

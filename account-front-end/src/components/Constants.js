@@ -1,2 +1,2 @@
-export const postURL = 'http://localhost:8080/';
-export const getURL = 'http://localhost:8080/all'
+export const postURL = '/account/';
+export const getURL = '/account/all'
