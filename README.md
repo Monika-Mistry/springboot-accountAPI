@@ -6,6 +6,7 @@ Based on the project: [alvinjo/RealAccountApi](https://github.com/alvinjo/RealAc
 - MongoDB
 - ActiveMQ
 - Maven
+- Node
 
 # Microservices
 ### AccountAPI
@@ -22,6 +23,8 @@ The AccountConsumer is the *consumer* in this JMS application. It waits for mess
 An independent service running over http://localhost:27017
 ### ActiveMQ
 This is the broker (queue) between the AccountAPI and AccountConsumer. It runs over http://localhost:8161
+### React Front End
+A basic react front end which allows a user to create a new account and view all accounts. More information on how to run can be found [here](https://github.com/Monika-Mistry/springboot-accountAPI/tree/master/account-front-end)
 
 # Running the application
 1. Clone down this git repository
