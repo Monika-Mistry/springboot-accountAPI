@@ -67,11 +67,17 @@ public class AccountController {
 		createAccount.setLastName(account.getLastName());
 		createAccount.setAccountNumber(accountNumber);
 		createAccount.setPrize(prize);
-
-		Account newAccount = accountService.createAccount(createAccount);
+	
+//		Account newAccount = accountService.createAccount(createAccount);
+//		
+//		sendToQueue(newAccount);
+//		
+//		
+//		return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
 		
-		sendToQueue(newAccount);
-		return new ResponseEntity<>(newAccount, HttpStatus.CREATED);
+		
+		sendToQueue(createAccount);
+		return new ResponseEntity<>(accountService.createAccount(createAccount), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping
