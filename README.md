@@ -16,7 +16,7 @@ Contains all the endpoints to achieve CRUD (Create, Read, Update, Delete) functi
 ### AccountNumberGeneratorAPI
 This API generates a random account number containing a character (A, B or C) and 6-10 digits depending on the implementation in the service layer. The API receives requests from the AccountAPI and responds with the generated account number.
 ### AccountPrizeGeneratorAPI
-This API generates a random prize in the range of £0 - £1000. The API is called by the AccountAPI and responds with the generated prize.
+This API generates a random prize in the range of £1 - £1000. The API is called by the AccountAPI and responds with the generated prize.
 ### AccountConsumer
 The AccountConsumer is the *consumer* in this JMS application. It waits for messages (accounts created by AccountAPI) to appear in the queue and then processes the received message (account), saving the account to a Mongo database.
 ### Mongo Database
