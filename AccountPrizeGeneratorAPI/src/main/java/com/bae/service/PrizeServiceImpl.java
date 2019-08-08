@@ -11,7 +11,7 @@ public class PrizeServiceImpl implements PrizeService {
 		
 		Random random = new Random();
 		
-		int prize = random.nextInt(1000);
+		int prize = random.nextInt(1000) + 1;
 		
 		return "£" + prize ;
 	}
