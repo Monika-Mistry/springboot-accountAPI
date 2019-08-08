@@ -32,3 +32,7 @@ A basic react front end which allows a user to create a new account and view all
 3. Run command `mvn spring-boot:run`
 4. Start ActiveMQ service
 5. Start MongoDB
+
+# Running with docker-compose
+1. Install docker-compose
+2. `docker-compose up -d`
