@@ -15,36 +15,36 @@ services:
         build:
             context: ./AccountAPI
             dockerfile: Dockerfile
-        ports:
-            - {target: 8080, protocol: tcp}
+        expose:
+            - '8080'
     prizegen:
         image: mpmistry/account-prizegen
         build:
             context: ./AccountPrizeGeneratorAPI
             dockerfile: Dockerfile
-        ports:
-            - {target: 8082, protocol: tcp}
+        expose:
+            - '8082'
     numgen:
         image: mpmistry/account-numgen
         build:
             context: ./AccountNumberGeneratorAPI
             dockerfile: Dockerfile
-        ports:
-            - {target: 8081, protocol: tcp}
+        expose:
+            - '8081'
     consumer:
         image: mpmistry/account-consumer
         build:
             context: ./AccountConsumer
             dockerfile: Dockerfile
-        ports:
-            - {target: 8083, protocol: tcp}
+        expose:
+            - '8083'
     account-front-end:
         image: mpmistry/account-front-end
         build:
             context: ./account-front-end
             dockerfile: Dockerfile
-        ports:
-            - {target: 3000, protocol: tcp}
+        expose:
+            - '3000'
         environment:
             - REACT_APP_SERVICE_HOST=${REACT_APP_SERVICE_HOST}
     mongo:
