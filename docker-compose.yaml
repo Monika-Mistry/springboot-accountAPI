@@ -1,0 +1,58 @@
+version: '3.7'
+services:
+    nginx:
+        container_name: nginx
+        image: nginx:latest
+        volumes:
+            - {type: bind, source: ./nginx/nginx.conf, target: /etc/nginx/nginx.conf}
+        ports:
+            - {target: 80, published: 80, protocol: tcp}
+        depends_on:
+            - account-front-end
+            - activemq
+    account:
+        image: mpmistry/account-core
+        build:
+            context: ./AccountAPI
+            dockerfile: Dockerfile
+        ports:
+            - {target: 8080, protocol: tcp}
+    prizegen:
+        image: mpmistry/account-prizegen
+        build:
+            context: ./AccountPrizeGeneratorAPI
+            dockerfile: Dockerfile
+        ports:
+            - {target: 8082, protocol: tcp}
+    numgen:
+        image: mpmistry/account-numgen
+        build:
+            context: ./AccountNumberGeneratorAPI
+            dockerfile: Dockerfile
+        ports:
+            - {target: 8081, protocol: tcp}
+    consumer:
+        image: mpmistry/account-consumer
+        build:
+            context: ./AccountConsumer
+            dockerfile: Dockerfile
+        ports:
+            - {target: 8083, protocol: tcp}
+    account-front-end:
+        image: mpmistry/account-front-end
+        build:
+            context: ./account-front-end
+            dockerfile: Dockerfile
+        ports:
+            - {target: 3000, protocol: tcp}
+        environment:
+            - REACT_APP_SERVICE_HOST=${REACT_APP_SERVICE_HOST}
+    mongo:
+        image: mongo
+        ports:
+            - '27017:27017'
+    activemq:
+        image: rmohr/activemq
+        ports:
+            - {target: 8161, published: 8161, protocol: tcp}
+            - {target: 61616, published: 61616, protocol: tcp}
