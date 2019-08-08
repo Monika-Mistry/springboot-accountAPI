@@ -23,6 +23,7 @@ public class SentAccount {
 		this.lastName = account.getLastName();
 		this.accountNumber = account.getAccountNumber();
 		this.prize = account.getPrize();
+
 	}
 
 	public String getFirstName() {

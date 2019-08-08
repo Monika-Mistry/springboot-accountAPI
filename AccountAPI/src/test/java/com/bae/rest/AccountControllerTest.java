@@ -1,5 +1,6 @@
 package com.bae.rest;
 
+import static org.hamcrest.CoreMatchers.any;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -9,11 +10,13 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,7 @@ import com.bae.domain.Account;
 import com.bae.service.AccountService;
 
 @RunWith(SpringRunner.class)
+@SpringBootTest
 public class AccountControllerTest {
 
 	@InjectMocks
@@ -43,12 +47,22 @@ public class AccountControllerTest {
 	private static final Account MOCK_ACCOUNT_NEW = new Account(1L, "John", "Smith", "A123456", "£0");
 	private static final Account MOCK_ACCOUNT_2 = new Account(2L, "Jane", "Doe");
 	private static final String MOCK_DELETE_RESPONSE = "Account Successfully Deleted";
+	public static final Account MOCK_ACCOUNT = new Account();
 
 	private static final String MOCK_ACCOUNT_NO = "A123456";
 	private static final String MOCK_PRIZE = "£0";
 	private static final String ACC_NO_URL = "http://localhost:8081/getAccNo";
 	private static final String PRIZE_URL = "http://localhost:8082/getPrize";
-
+	
+//	@Before
+//	public void setup() {
+//		MOCK_ACCOUNT.setFirstName("John");
+//		MOCK_ACCOUNT.setLastName("Smtih");
+//		MOCK_ACCOUNT.setAccountNumber("A123456");
+//		MOCK_ACCOUNT.setPrize("£0");
+//		
+//	}
+	
 	@Test
 	public void findAllTest() {
 		List<Account> MOCK_LIST = new ArrayList<>();
@@ -74,9 +88,10 @@ public class AccountControllerTest {
 
 		doReturn(prize).when(restTemplate).exchange(PRIZE_URL, HttpMethod.GET, null, String.class);
 		
-		when(service.createAccount(MOCK_ACCOUNT_1)).thenReturn(MOCK_ACCOUNT_NEW);
+		
+		when(service.createAccount(MOCK_ACCOUNT_NEW)).thenReturn(MOCK_ACCOUNT_NEW);
 
-		assertEquals(MOCK_ACCOUNT_NEW, controller.createAccount(MOCK_ACCOUNT_1).getBody());
+		assertEquals(MOCK_ACCOUNT_NEW, controller.createAccount(MOCK_ACCOUNT_NEW).getBody());
 
 		verify(service).createAccount(MOCK_ACCOUNT_NEW);
 

@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +26,9 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.bae.domain.Account;
 import com.bae.service.AccountService;
@@ -38,6 +41,9 @@ public class WebMockTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@Autowired
+	private WebApplicationContext ctx;
 
 	@MockBean
 	private AccountService service;
@@ -54,6 +60,11 @@ public class WebMockTest {
 	private static final String MOCK_DELETE_RESPONSE = "Account Successfully Deleted";
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
+	@Before
+	public void setup() {
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
+	}
+	
 	@Test
 	public void findAllTest() throws Exception {
 		List<Account> MOCK_LIST = new ArrayList<>();
@@ -97,7 +108,7 @@ public class WebMockTest {
 		String deleteValue = OBJECT_MAPPER.writeValueAsString(MOCK_ACCOUNT_1);
 
 //		when(service.deleteAccount(MOCK_ACCOUNT_1)).thenReturn(MOCK_DELETE_RESPONSE);
-		doReturn(MOCK_DELETE_RESPONSE).when(service).deleteAccount(MOCK_ACCOUNT_1);
+		doReturn("Account Succesfully Deleted").when(service).deleteAccount(MOCK_ACCOUNT_1);
 
 		mockMvc.perform(MockMvcRequestBuilders.delete("/").contentType(MediaType.APPLICATION_JSON).content(deleteValue))
 				.andExpect(status().isOk()).andExpect(content().string(MOCK_DELETE_RESPONSE)).andDo(print())
@@ -105,6 +116,7 @@ public class WebMockTest {
 
 	}
 
+	
 	@Ignore
 	@Test
 	public void updateAccountTest() throws Exception {
